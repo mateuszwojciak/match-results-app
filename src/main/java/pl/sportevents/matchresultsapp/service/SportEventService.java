@@ -2,11 +2,11 @@ package pl.sportevents.matchresultsapp.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import pl.sportevents.matchresultsapp.exception.JsonFileUploadException;
 import pl.sportevents.matchresultsapp.model.EventResponse;
 import pl.sportevents.matchresultsapp.model.EventWrapperList;
 import pl.sportevents.matchresultsapp.model.SportEvent;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +18,7 @@ public class SportEventService {
     @Value("${file.path}")
     private String filePath;
 
-    public List<EventResponse> getEvents() throws IOException {
+    public List<EventResponse> getEvents() throws JsonFileUploadException {
         JsonReader jsonReader = new JsonReader();
         EventWrapperList wrapper = jsonReader.readJsonFile(filePath);
         List<EventResponse> eventResponses = new ArrayList<>();
@@ -57,7 +57,7 @@ public class SportEventService {
         return eventResponse;
     }
 
-    public List<EventResponse> getTopEventsByProbabilityValue(int numberOfRecords) throws IOException {
+    public List<EventResponse> getTopEventsByProbabilityValue(int numberOfRecords) throws JsonFileUploadException {
         List<EventResponse> events = getEvents();
         events.sort((e1, e2) -> Double
                 .compare((e2.getHighestProbableValue()), e1.getHighestProbableValue()));
@@ -93,7 +93,7 @@ public class SportEventService {
         }
     }
 
-    public Set<String> uniqueTeamNames() throws IOException {
+    public Set<String> uniqueTeamNames() throws JsonFileUploadException {
         List<EventResponse> events = getEvents();
         Set<String> names = new HashSet<>();
         for (EventResponse event : events) {
