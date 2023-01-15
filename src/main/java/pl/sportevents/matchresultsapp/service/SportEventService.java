@@ -7,10 +7,7 @@ import pl.sportevents.matchresultsapp.model.EventResponse;
 import pl.sportevents.matchresultsapp.model.EventWrapperList;
 import pl.sportevents.matchresultsapp.model.SportEvent;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SportEventService {
@@ -102,5 +99,20 @@ public class SportEventService {
         }
 
         return names;
+    }
+
+    public Set<String> uniqueTeamNamesForGivenCompetition(String competitionName) throws JsonFileUploadException {
+        List<EventResponse> names = getEvents()
+                .stream()
+                .filter(e -> e.getCompetitionName().equals(competitionName))
+                .toList();
+
+        Set<String> uniqueNames = new HashSet<>();
+        for (EventResponse event : names) {
+            uniqueNames.add(event.getHomeTeamName());
+            uniqueNames.add(event.getAwayTeamName());
+        }
+
+        return uniqueNames;
     }
 }

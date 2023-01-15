@@ -15,7 +15,7 @@ public class EventResponse {
     @JsonProperty("start_date")
     private String eventStartDate;
 
-    @JsonProperty("competition_nam")
+    @JsonProperty("competition_name")
     private String competitionName;
 
     @JsonIgnore
