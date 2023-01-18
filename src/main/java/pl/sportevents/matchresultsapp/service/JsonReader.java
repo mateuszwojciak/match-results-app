@@ -7,8 +7,9 @@ import pl.sportevents.matchresultsapp.model.EventWrapperList;
 import java.io.File;
 import java.io.IOException;
 
-class JsonReader {
-    EventWrapperList readJsonFile(String filePath) throws JsonFileUploadException {
+public class JsonReader {
+
+    public EventWrapperList readJsonFile(String filePath) throws JsonFileUploadException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(filePath);
 
